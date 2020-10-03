@@ -8,3 +8,19 @@
 		width: 100%;
 	}
 }
+@media screen and  (max-width: 768px){
+	.hero-banner .ui.images.middle.aligned.center {
+		display: block!important;
+	}
+	.hero-banner .slideshow {
+		display: none!important;
+	}
+  }
+  @media screen and  (min-width: 768px){
+	.hero-banner .ui.images.middle.aligned.center {
+		display: none!important;
+	}
+	.hero-banner .slideshow {
+		display: block!important;
+	}
+  }
