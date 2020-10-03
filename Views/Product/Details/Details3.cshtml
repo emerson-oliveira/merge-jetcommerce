@@ -1,0 +1,173 @@
+@model DomainProduct.Entities.ProductDetail
+@{
+    DomainProduct.Entities.Sku SKUPadrao = new DomainProduct.Entities.Sku();
+    if (TempData["SKUPadrao"] != null)
+    {
+        SKUPadrao = (DomainProduct.Entities.Sku)TempData["SKUPadrao"];
+    }
+    string ListaImagens = string.Empty;
+    string ListaSKU = string.Empty;
+    string AvailableReferences = string.Empty;
+    string JsonDetail = string.Empty;
+    string variacaoSelecionada = string.Empty;
+    string skuSelecionado = string.Empty;
+
+    ViewModels.ViewModelStore.Produto.TreeReference treeReference = (ViewModels.ViewModelStore.Produto.TreeReference)TempData["TreeReference"];
+
+    if (treeReference != null)
+    {
+        JsonDetail = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(treeReference);
+    }
+
+    if (Model.ProductImages != null)
+    {
+        ListaImagens = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model.ProductImages);
+    }
+
+    if (Model.SKUs != null)
+    {
+        ListaSKU = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model.SKUs);
+    }
+
+    if (Model.AvailableReferences != null)
+    {
+        AvailableReferences = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model.AvailableReferences);
+    }
+
+    if (Model.AvailableReferences != null && Model.AvailableReferences.Count > 0)
+    {
+        foreach (var referencias in Model.AvailableReferences.OrderBy(o => o.OrdinationOfReferences).ToList())
+        {
+            foreach (var variacoes in referencias.Variations)
+            {
+                if (SKUPadrao.Variations.FindAll(r => r.IdVariation == variacoes.IdVariation).Count > 0)
+                {
+                    var referencia_selecionada = SKUPadrao.Variations.FindAll(r => r.IdVariation == variacoes.IdVariation);
+                    variacaoSelecionada += referencias.IdReference.ToString() + '-' + referencia_selecionada.FirstOrDefault().IdVariation.ToString() + ',';
+                }
+            }
+        }
+
+        string character = variacaoSelecionada.Substring(variacaoSelecionada.Length - 1);
+        if (character == ",")
+        {
+            variacaoSelecionada = variacaoSelecionada.Remove(variacaoSelecionada.Length - 1);
+        }
+    }
+
+
+    if (SKUPadrao.InstallmentMax == null)
+    {
+        SKUPadrao.InstallmentMax = new DomainProduct.Entities.InstallmentMax();
+        SKUPadrao.InstallmentMax.MaxNumber = 0;
+        SKUPadrao.InstallmentMax.Value = 0;
+    }
+
+    List<DomainProduct.Entities.ProductRating> lista_avaliacoes_completa = new List<DomainProduct.Entities.ProductRating>();
+    if (Model.ProductRatings.Count > 5)
+    {
+        lista_avaliacoes_completa.AddRange(Model.ProductRatings);
+        lista_avaliacoes_completa.RemoveRange(0, 5);
+    }
+
+    //GRADE ABERTA B2C
+    var hasOpenSku = ViewBag.HasOpenSku != null ? ViewBag.HasOpenSku : false;
+
+    //OneClickMaxiPago
+    var useOneClickMaxiPago = ViewBag.UseOneClickMaxiPago != null ? ViewBag.UseOneClickMaxiPago : false;
+
+    List<DomainProduct.Entities.ProductImage> productFirstReferenceImages = new List<DomainProduct.Entities.ProductImage>();
+    List<DomainProduct.Entities.ProductImage> productImages = new List<DomainProduct.Entities.ProductImage>();
+    var classSkus = "nine";
+
+    if (hasOpenSku)
+    {
+        classSkus = Model.SKUs != null ? "seven" : "nine";
+        productImages = Model.ProductImages;
+    }
+    else
+    {
+        if (Model.AvailableReferences != null)
+        {
+            foreach (var item in Model.ProductImages)
+            {
+                int flag = 0;
+                if (item.Variacao_ids != null)
+                {
+                    for (int i = 0; i < item.Variacao_ids.Length; i++)
+                    {
+                        for (int j = 0; j < SKUPadrao.Variations.Count(); j++)
+                        {
+                            if (item.Variacao_ids[0] == SKUPadrao.Variations[j].IdVariation)
+                            {
+                                productFirstReferenceImages.Add(item);
+                            }
+                            if (item.Variacao_ids[i] == SKUPadrao.Variations[j].IdVariation)
+                            {
+                                flag++;
+                            }
+                        }
+                    }
+                }
+                if (flag == SKUPadrao.Variations.Count())
+                {
+                    productImages.Add(item);
+                }
+            }
+
+            if (productImages.Count == 0)
+            {
+                productImages = productFirstReferenceImages;
+            }
+            if (productImages.Count == 0)
+            {
+                productImages = Model.ProductImages;
+            }
+            if (productImages.Count == 0)
+            {
+                Model.ProductImages.RemoveAll(item => item.Variacao_ids == null);
+            }
+        }
+        else
+        {
+            productImages = Model.ProductImages;
+        }
+    }
+}
+
+<script>
+    var total_avaliacoes_produto = @(Model.ProductRatings != null ? Model.ProductRatings.Count : 0);
+    var lista_avaliacao_produto = @(Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(lista_avaliacoes_completa)));
+</script>
+@{
+    ViewBag.Title = string.IsNullOrEmpty(Model.Title) ? Model.Name : Model.Title;
+    Layout = "~/Views/Shared/Base/_LayoutBreadCrumb.cshtml";
+}
+@section remarketing{
+    <!-- Google Remarketing -->
+    @Html.Action("GoogleRemarketing", "Common", new { origin = ViewContext.RouteData.Values["controller"] })
+    <!-- End Google Remarketing -->
+}
+
+@section CustomSeo {
+    @{
+        if (!String.IsNullOrEmpty(Model.MetaDescription))
+        {
+            <meta name="Description" content="@Model.MetaDescription">
+        }
+
+        if (!String.IsNullOrEmpty(Model.MetaKeyWords))
+        {
+            <meta name="Keywords" content="@Model.MetaKeyWords">
+        }
+    }
+}
+
+@section breadcrumbs {
+    <div class="ui two column grid stackable middle aligned">
+        <div class="ui container">
+            <div class="column">
+                <div class="ui breadcrumb margin top medium">
+                    <a class="section" href=""></a>
+
+                    <!--COME

@@ -1,0 +1,28 @@
+﻿@model List<DomainCompany.Entities.CustomPage>
+
+@{
+  int counter = 1;
+  int commonQuestionColumn = 2;
+  bool commonQuestionsLink = false;
+}
+
+@foreach (var itemTitle in Model)
+{
+  <div class="column-item">
+    <header>@itemTitle.Name</header>
+    <div class="ui link list">
+      <a href="https://www.usiminas.com/privacidade/ " class="item" title="Politica de Privacidade."><h5>Politica de Privacidade.</h5></a>
+      @foreach (var itemPage in itemTitle.CustomPagesContent)
+      {
+        <a href="/institucional/@itemTitle.IdCustomPage/@itemPage.IdCustomPageContent" class="item" title="@itemPage.Name"><h5>@itemPage.Name</h5></a>
+      }
+      @if (commonQuestionsLink == false && commonQuestionColumn == counter)
+      {
+        <a href="@Url.Action("CommonQuestions", "Company")" class="item" title="Dúvidas Frequentes"><h5>Dúvidas Frequentes</h5></a>
+        commonQuestionsLink = true;
+      }
+      <a href="https://blog-solucoes.usiminas.com/ " class="item" title="Blog"><h5>Blog</h5></a>
+      </div>
+  </div>
+  counter++;
+}

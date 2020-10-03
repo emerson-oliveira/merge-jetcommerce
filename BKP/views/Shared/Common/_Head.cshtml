@@ -1,0 +1,124 @@
+@{
+  string _classSearch = Session["idEventList"] == null ? "search" : "filterListEventsProducts";
+  string _classMiniCart = Session["idEventList"] == null && Session["EventList"] == null ? "mini-cart" : "mini-cart-list-event";
+}
+<div class="cabecalho">
+  <div class="ui container">
+    <div class="cabecalho-wrapper">
+      <div class="menu-toggle">
+        <svg enable-background="new 0 0 384.97 384.97" version="1.1" viewBox="0 0 384.97 384.97" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+        	<path d="m12.03 84.212h360.91c6.641 0 12.03-5.39 12.03-12.03 0-6.641-5.39-12.03-12.03-12.03h-360.91c-6.64 0-12.03 5.389-12.03 12.03s5.39 12.03 12.03 12.03z"></path>
+        	<path d="m372.94 180.46h-360.91c-6.641 0-12.03 5.39-12.03 12.03s5.39 12.03 12.03 12.03h360.91c6.641 0 12.03-5.39 12.03-12.03s-5.389-12.03-12.03-12.03z"></path>
+        	<path d="m372.94 300.76h-360.91c-6.641 0-12.03 5.39-12.03 12.03 0 6.641 5.39 12.03 12.03 12.03h360.91c6.641 0 12.03-5.39 12.03-12.03 1e-3 -6.641-5.389-12.03-12.03-12.03z"></path>
+        </svg>
+      </div>
+      <div class="logo">
+        <a href="/Home" title="Página Inicial">
+          <img class="ui middle aligned image logo" src="/assets/image/logo/logo.png" alt="@LojaCorp.Control.Company._Company.FantasyName" title="@LojaCorp.Control.Company._Company.FantasyName">
+        </a>
+      </div>
+      <div class="pesquisa">
+        <div class="ui category @_classSearch">
+          <div class="ui icon input fluid">
+            <input class="prompt" type="text" placeholder="O que você procura?">
+            <i class="search icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
+      </div>
+      <div class="acesso">
+        <div class="login">
+          <svg enable-background="new 0 0 55 55" version="1.1" viewBox="0 0 55 55" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+          	<path d="m55 27.5c0-15.163-12.337-27.5-27.5-27.5s-27.5 12.337-27.5 27.5c0 8.009 3.444 15.228 8.926 20.258l-0.026 0.023 0.892 0.752c0.058 0.049 0.121 0.089 0.179 0.137 0.474 0.393 0.965 0.766 1.465 1.127 0.162 0.117 0.324 0.234 0.489 0.348 0.534 0.368 1.082 0.717 1.642 1.048 0.122 0.072 0.245 0.142 0.368 0.212 0.613 0.349 1.239 0.678 1.88 0.98 0.047 0.022 0.095 0.042 0.142 0.064 2.089 0.971 4.319 1.684 6.651 2.105 0.061 0.011 0.122 0.022 0.184 0.033 0.724 0.125 1.456 0.225 2.197 0.292 0.09 8e-3 0.18 0.013 0.271 0.021 0.738 0.061 1.484 0.1 2.24 0.1 0.749 0 1.488-0.039 2.222-0.098 0.093-8e-3 0.186-0.013 0.279-0.021 0.735-0.067 1.461-0.164 2.178-0.287 0.062-0.011 0.125-0.022 0.187-0.034 2.297-0.412 4.495-1.109 6.557-2.055 0.076-0.035 0.153-0.068 0.229-0.104 0.617-0.29 1.22-0.603 1.811-0.936 0.147-0.083 0.293-0.167 0.439-0.253 0.538-0.317 1.067-0.648 1.581-1 0.185-0.126 0.366-0.259 0.549-0.391 0.439-0.316 0.87-0.642 1.289-0.983 0.093-0.075 0.193-0.14 0.284-0.217l0.915-0.764-0.027-0.023c5.53-5.032 9.007-12.284 9.007-20.334zm-53 0c0-14.061 11.439-25.5 25.5-25.5s25.5 11.439 25.5 25.5c0 7.577-3.325 14.389-8.589 19.063-0.294-0.203-0.59-0.385-0.893-0.537l-8.467-4.233c-0.76-0.38-1.232-1.144-1.232-1.993v-2.957c0.196-0.242 0.403-0.516 0.617-0.817 1.096-1.548 1.975-3.27 2.616-5.123 1.267-0.602 2.085-1.864 2.085-3.289v-3.545c0-0.867-0.318-1.708-0.887-2.369v-4.667c0.052-0.519 0.236-3.448-1.883-5.864-1.843-2.104-4.826-3.169-8.867-3.169s-7.024 1.065-8.867 3.168c-2.119 2.416-1.935 5.345-1.883 5.864v4.667c-0.568 0.661-0.887 1.502-0.887 2.369v3.545c0 1.101 0.494 2.128 1.34 2.821 0.81 3.173 2.477 5.575 3.093 6.389v2.894c0 0.816-0.445 1.566-1.162 1.958l-7.907 4.313c-0.252 0.137-0.502 0.297-0.752 0.476-5.199-4.672-8.475-11.442-8.475-18.964zm40.459 20.632c-0.35 0.254-0.706 0.5-1.067 0.735-0.166 0.108-0.331 0.216-0.5 0.321-0.472 0.292-0.952 0.57-1.442 0.83-0.108 0.057-0.217 0.111-0.326 0.167-1.126 0.577-2.291 1.073-3.488 1.476-0.042 0.014-0.084 0.029-0.127 0.043-0.627 0.208-1.262 0.393-1.904 0.552-2e-3 0-4e-3 1e-3 -6e-3 1e-3 -0.648 0.16-1.304 0.293-1.964 0.402-0.018 3e-3 -0.036 7e-3 -0.054 0.01-0.621 0.101-1.247 0.174-1.875 0.229-0.111 0.01-0.222 0.017-0.334 0.025-0.621 0.047-1.245 0.077-1.872 0.077-0.634 0-1.266-0.031-1.895-0.078-0.109-8e-3 -0.218-0.015-0.326-0.025-0.634-0.056-1.265-0.131-1.89-0.233-0.028-5e-3 -0.056-0.01-0.084-0.015-1.322-0.221-2.623-0.546-3.89-0.971-0.039-0.013-0.079-0.027-0.118-0.04-0.629-0.214-1.251-0.451-1.862-0.713-4e-3 -2e-3 -9e-3 -4e-3 -0.013-6e-3 -0.578-0.249-1.145-0.525-1.705-0.816-0.073-0.038-0.147-0.074-0.219-0.113-0.511-0.273-1.011-0.568-1.504-0.876-0.146-0.092-0.291-0.185-0.435-0.279-0.454-0.297-0.902-0.606-1.338-0.933-0.045-0.034-0.088-0.07-0.133-0.104l0.096-0.054 7.907-4.313c1.36-0.742 2.205-2.165 2.205-3.714l-1e-3 -3.602-0.23-0.278c-0.022-0.025-2.184-2.655-3.001-6.216l-0.091-0.396-0.341-0.221c-0.481-0.311-0.769-0.831-0.769-1.392v-3.545c0-0.465 0.197-0.898 0.557-1.223l0.33-0.298v-5.57l-9e-3 -0.131c-3e-3 -0.024-0.298-2.429 1.396-4.36 1.446-1.648 3.924-2.485 7.363-2.485 3.426 0 5.896 0.83 7.346 2.466 1.692 1.911 1.415 4.361 1.413 4.381l-9e-3 5.701 0.33 0.298c0.359 0.324 0.557 0.758 0.557 1.223v3.545c0 0.713-0.485 1.36-1.181 1.575l-0.497 0.153-0.16 0.495c-0.59 1.833-1.43 3.526-2.496 5.032-0.262 0.37-0.517 0.698-0.736 0.949l-0.248 0.283v3.699c0 1.612 0.896 3.062 2.338 3.782l8.467 4.233c0.054 0.027 0.107 0.055 0.16 0.083-0.107 0.081-0.217 0.156-0.325 0.234z"/>
+          </svg>
+          <div class="login-wrapper">
+            @if ((Session["UserAuthenticated"] == null || (Convert.ToBoolean(Session["Guest"]) == true)) && Session["Seller"] == null)
+            {
+              <a href="/Customer/login">ENTRE</a>
+               <span>OU</span>
+              <a href="/Customer/register">CADASTRE-SE</a>
+            }
+            @if ((Session["UserAuthenticated"] != null) && (Convert.ToBoolean(Session["Guest"]) == false))
+            {
+                var userAuthenticated = (DomainCustomer.Entities.Customer)Session["UserAuthenticated"];
+
+                Char delimiter = ' ';
+                String[] nickName = userAuthenticated.Name.Split(delimiter);
+
+                <div class="ui inline item dropdown pointing top right">
+                    <div class="text regular black">
+                        <span class="text bold">Olá <span id="userNameCommon">@nickName[0]</span></span>
+                    </div>
+                    <div class="menu">
+                        <a href="/customer" class="item" title="Minha Conta"><i class="options icon"></i>Minha Conta</a>
+                        <a href="/order" class="item" title="Meus Pedidos"><i class="shopping bag icon"></i>Meus Pedidos</a>
+                        <a href="/customer/logout" class="item" title="Sair"><i class="sign out icon"></i>Sair</a>
+                    </div>
+                </div>
+            }
+            else if ((Session["Seller"] != null))
+            {
+                var userAuthenticated = (DomainAssistedSale.Entities.Seller)Session["Seller"];
+
+                Char delimiter = ' ';
+                String[] nickName = userAuthenticated.Name.Split(delimiter);
+
+                <div class="ui inline item dropdown pointing top right">
+                    <div class="text regular black">
+                        <i class="rocket icon regular"></i>
+                        <span class="text">Olá <span title="@userAuthenticated.Name.ToString()" id="userNameCommon">@nickName[0]</span></span>
+                    </div>
+                    <div class="menu">
+                        <a href="/assistedsale" class="item" title="Minha Conta"><i class="options icon"></i>Meus Clientes</a>
+                        <a href="/assistedsale/logout" class="item" title="Sair"><i class="sign out icon"></i>Sair</a>
+                    </div>
+                </div>
+            }
+
+            @if((Session["Seller"] == null)) {
+                @Html.Action("B2BIsActived", "Company", null)
+            }
+          </div>
+
+        </div>
+        @{
+            bool isb2b = Session["segment"] != null && Session["segment"].ToString() == "b2b" ? true : false;
+            DomainAssistedSale.Entities.Seller _assistedSale = (DomainAssistedSale.Entities.Seller)Session["Seller"];
+
+        }
+        <div id="cartButton" class="ui labeled button cartbutton no margin bottom @_classMiniCart" tabindex="0" data-segment="@(Session["segment"] != null ? Session["segment"] : "b2c")">
+          <svg data-name="Layer 1" viewBox="0 0 147.87 94.19" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#000000" transform="translate(-26.06 -34.4)" d="M116.53,90.92V46.17H40.73V45a10.76,10.76,0,0,0-11-10.6,3.53,3.53,0,1,0,0,7.06A3.55,3.55,0,0,1,33.4,45v58.87a10.76,10.76,0,0,0,11,10.6h68.47a3.54,3.54,0,1,0,0-7.07H44.4a3.54,3.54,0,0,1-3.67-3.53V97.39ZM77.41,79.14H90.86V86L77.41,87.15Zm-4.89,8.48L59.07,88.8V79.14H72.52Zm4.89-13.19V66.19H90.86v8.24Zm-4.89,0H59.07V66.19H72.52Zm-18.34,0H40.73V66.19H54.18Zm0,4.71v10L40.73,90.33V79.14Zm55,5.3L95.75,85.62V79.14H109.2Zm0-10H95.75V66.19H109.2Zm0-21.19v8.24H95.75V53.24Zm-18.34,0v8.24H77.41V53.24Zm-18.34,0v8.24H59.07V53.24ZM54.18,61.48H40.73V53.24H54.18Z"/>
+            <path fill="#000000" transform="translate(-26.06 -34.4)" d="m55.4 121.53a7.34 7.34 0 1 1-7.33-7.06 7.21 7.21 0 0 1 7.33 7.06z"/>
+            <path fill="#000000" transform="translate(-26.06 -34.4)" d="m109.2 121.53a7.34 7.34 0 1 1-7.34-7.06 7.21 7.21 0 0 1 7.34 7.06z"/>
+            <path fill="#000000" transform="translate(-26.06 -34.4)" d="M157,72.11c-1.73-2.83-2.75-7.86-3.85-12.34-3.86-12.42-13.09-13.6-21.38-13.6H119.48v68.26H126c0-.35-.06-.69-.06-1.05,0-10,9.53-18.11,18.18-18.11s18,8.13,18,18.11c0,.35,0,.68-.06,1h3c7.55.47,8.81-6.05,8.81-6.05V83.59Zm-33.95.24V53.48H136c3.29,0,6.64.24,8.81,6.61,2.2,6.13,1.91,7.63,3.77,12.26Z"/>
+            <path fill="#000000" transform="translate(-26.06 -34.4)" d="m144.12 100.49a12.9 12.9 0 1 0 12.88 12.89 12.9 12.9 0 0 0-12.88-12.89z"/>
+          </svg>
+
+          <a class="total-card" id="total_itens_card">
+            @{
+              if (Session["EventList"] == null)
+              {
+                @Html.Action("TotalItensCart", "Checkout")
+              }
+              else
+              {
+                @Html.Action("TotalItensList", "EventList")
+              }
+            }
+
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pesquisa-mobile">
+  <div class="ui category @_classSearch">
+    <div class="ui icon input fluid">
+      <input class="prompt" type="text" placeholder="O que você procura?">
+      <i class="search icon"></i>
+    </div>
+    <div class="results"></div>
+  </div>
+</div>

@@ -1,0 +1,207 @@
+@model List<DomainProduct.Entities.Category>
+
+<div class="menu-header">
+  <div class="ui container">
+    <div class="menu">
+      <nav class="navigation">
+        <ul>
+          <!--<li class="navigation-todos-item">
+             <a href="javascript(0)" class="item" title="Todas os produtos">
+              Todos os produtos
+            </a>
+            <ul class="submenu">
+              @foreach (DomainProduct.Entities.Category category in Model){
+                if (category.Level.Length == 2){
+                  <li>
+                    <a href="@category.UrlFriendly" class="item" title="@category.Name">
+                      @category.Name
+                      @if (category.ChildCategories != null && category.ChildCategories.Any())
+                      {
+                        <i class="dropdown icon"></i>
+                      }
+                    </a>
+                    @if (category.ChildCategories != null && category.ChildCategories.Any())
+                    {
+                      <div class="megamenu clearfix">
+                        <div class="ui grid">
+                          <div class="row">
+                            <div class="@(category.Image == null ? "sixteen wide computer column" : "fifteen wide mobile twelve wide tablet twelve wide computer column")">
+                              <div class="ui grid three column">
+                                @if (category.ChildCategories != null && category.ChildCategories.Any())
+                                {
+                                  foreach (DomainProduct.Entities.Category subCategoryLevel1 in category.ChildCategories)
+                                  {
+                                    <div class="sixteen wide mobile eight wide tablet four wide computer column">
+                                      <div class="ui list relaxed">
+                                        <a href="@subCategoryLevel1.UrlFriendly" title="@subCategoryLevel1.Name">@subCategoryLevel1.Name</a>
+                                        @if (subCategoryLevel1.ChildCategories != null && subCategoryLevel1.ChildCategories.Any())
+                                        {
+                                          <div class="ui divider"></div>
+                                          foreach (var subCategoryLevel2 in subCategoryLevel1.ChildCategories)
+                                          {
+                                            <a class="item" href="@subCategoryLevel2.UrlFriendly" title="@subCategoryLevel2.Name">@subCategoryLevel2.Name</a>
+                                          }
+                                        }
+                                      </div>
+                                    </div>
+                                  }
+                                }
+                              </div>
+                            </div>
+                            @if (category.Image != null)
+                            {
+                              <div class="four wide tablet four wide computer column mobile-hide">
+                                @{
+                                  string linkCategoriaImagem = null;
+                                  if (category.Link != null)
+                                  {
+                                    linkCategoriaImagem = category.Link.Contains("http") || category.Link.Contains("https") ?  category.Link : "http://" + category.Link;
+                                  }
+                                  else
+                                  {
+                                    linkCategoriaImagem = @category.UrlFriendly;
+                                  }
+                                }
+                                <a href="@linkCategoriaImagem" alt="@category.Image" title="@category.Name">
+                                  <img class="ui image" src="@category.Image" alt="@category.Name" title="@category.Name" />
+                                </a>
+                              </div>
+                            }
+
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </li>
+                }
+                else
+                {
+                  <li>
+                    <a class="item" href="~/category/index/@category.IdCategory" title="@category.Name"><span>@category.Name</span></a>
+                  </li>
+                }
+              }
+            </ul>
+          </li> -->
+          @foreach (DomainProduct.Entities.Category category in Model){
+            if (category.Level.Length == 2){
+              <li>
+                <a href="@category.UrlFriendly" class="item" title="@category.Name">
+                  @category.Name
+                  @if (category.ChildCategories != null && category.ChildCategories.Any())
+                  {
+                    <i class="dropdown icon"></i>
+                  }
+                </a>
+                @if (category.ChildCategories != null && category.ChildCategories.Any())
+                {
+                  <div class="megamenu clearfix">
+                    <div class="ui grid">
+                      <div class="row">
+                        <div class="@(category.Image == null ? "sixteen wide computer column" : "fifteen wide mobile twelve wide tablet twelve wide computer column")">
+                          <div class="ui grid three column">
+                            @if (category.ChildCategories != null && category.ChildCategories.Any())
+                            {
+                              foreach (DomainProduct.Entities.Category subCategoryLevel1 in category.ChildCategories)
+                              {
+                                <div class="sixteen wide mobile eight wide tablet four wide computer column">
+                                  <div class="ui list relaxed">
+                                    <a href="@subCategoryLevel1.UrlFriendly" title="@subCategoryLevel1.Name">@subCategoryLevel1.Name</a>
+                                    @if (subCategoryLevel1.ChildCategories != null && subCategoryLevel1.ChildCategories.Any())
+                                    {
+                                      <div class="ui divider"></div>
+                                      foreach (var subCategoryLevel2 in subCategoryLevel1.ChildCategories)
+                                      {
+                                        <a class="item" href="@subCategoryLevel2.UrlFriendly" title="@subCategoryLevel2.Name">@subCategoryLevel2.Name</a>
+                                      }
+                                    }
+                                  </div>
+                                </div>
+                              }
+                            }
+                          </div>
+                        </div>
+                        @if (category.Image != null)
+                        {
+                          <div class="four wide tablet four wide computer column mobile-hide">
+                            @{
+                              string linkCategoriaImagem = null;
+                              if (category.Link != null)
+                              {
+                                linkCategoriaImagem = category.Link.Contains("http") || category.Link.Contains("https") ?  category.Link : "http://" + category.Link;
+                              }
+                              else
+                              {
+                                linkCategoriaImagem = @category.UrlFriendly;
+                              }
+                            }
+                            <a href="@linkCategoriaImagem" alt="@category.Image" title="@category.Name">
+                              <img class="ui image" src="@category.Image" alt="@category.Name" title="@category.Name" />
+                            </a>
+                          </div>
+                        }
+
+                      </div>
+                    </div>
+                  </div>
+                }
+              </li>
+            }
+            else
+            {
+              <li>
+                <a class="item" href="~/category/index/@category.IdCategory" title="@category.Name"><span>@category.Name</span></a>
+              </li>
+            }
+          }
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<div class="menu-mobile">
+  <div class="close-menu">
+    <svg enable-background="new 0 0 22.88 22.88" version="1.1" viewBox="0 0 22.88 22.88" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+      <path d="m0.324 1.909c-0.429-0.429-0.429-1.143 0-1.587 0.444-0.429 1.143-0.429 1.587 0l9.523 9.539 9.539-9.539c0.429-0.429 1.143-0.429 1.571 0 0.444 0.444 0.444 1.159 0 1.587l-9.523 9.524 9.523 9.539c0.444 0.429 0.444 1.143 0 1.587-0.429 0.429-1.143 0.429-1.571 0l-9.539-9.539-9.523 9.539c-0.444 0.429-1.143 0.429-1.587 0-0.429-0.444-0.429-1.159 0-1.587l9.523-9.539-9.523-9.524z"/>
+    </svg>
+  </div>
+  <nav class="navigation">
+    <ul class="menu-wrapper">
+              <li>
+                <a href="/categoria/todos-os-produtos" class="item" title="Todos os Produtos">
+                  Todos os Produtos
+                </a>
+              </li>
+              <li>
+                <a href="/categoria/chapas" class="item" title="Chapas">
+                  Chapas
+                </a>
+              </li>
+              <li>
+                <a href="/categoria/tubos" class="item" title="Tubos">
+                  Tubos
+                </a>
+              </li>
+              <li>
+                <a href="/categoria/perfis" class="item" title="Perfis">
+                  Perfis
+                </a>
+              </li>
+    </ul>
+    <div class="section-item-content">
+      <div class="item-container">
+        <ul class="header links">
+          <li>
+            <a href="/customer" class="item-link">Minha Conta</a>
+          </li>
+          <li>
+            <a href="/Customer/WishList" class="item-link">Lista de Desejo</a>
+          </li>
+          <li>
+            <a href="/customer" class="item-link">Entrar</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

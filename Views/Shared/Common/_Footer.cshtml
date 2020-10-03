@@ -1,0 +1,180 @@
+@{
+    List<DomainSocialNetwork.Entities.SocialNetwork> redesSociais = Session["SocialNetworkLinks"] != null ? (List<DomainSocialNetwork.Entities.SocialNetwork>)Session["SocialNetworkLinks"] : new List<DomainSocialNetwork.Entities.SocialNetwork>();
+}
+<div class="newsletter-bar">
+    <div class="ui container">
+        <div class="newsletter-wrapper">
+            <div class="title">
+                <header>
+                    CADASTRE-SE E GANHE DESCONTO NA PRIMEIRA COMPRA
+                </header>
+            <form class="formulario">
+                <div class="field">
+                    <div class="ui input">
+                        <input type="email" placeholder="seu@email.com.br" id="email_news">
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="submit" class="ui button red" id="btn_news">
+                        Cadastrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="ui container">
+        <div class="footer-wrapper">
+            <div class="right-column">
+                <div class="column tela-personalizadas">
+                    <div class="logo">
+                        <a href="/Home" title="P?gina Inicial">
+                            <img class="ui middle aligned image logo" src="/assets/image/logo/logo-white.png" alt="@LojaCorp.Control.Company._Company.FantasyName" title="@LojaCorp.Control.Company._Company.FantasyName">
+                        </a>
+                    </div>
+                    @Html.Action("CustomPages", "Home")
+                </div>
+                <div class="column">
+                    <header>
+                        FORMAS DE PAGAMENTO
+                    </header>
+                    @Html.Partial("~/Views/Shared/Common/_Payments_List.cshtml")
+                    <header>
+                        CERTIFICADOS DE SEGURAN&Ccedil;A
+                    </header>
+                    @Html.Action("EBit", "Company")
+                    @Html.Action("GetCompanySeal", "Company")
+                    <div class="img-certificado">
+                        <img src="/assets/image/certificado-ssl.png" alt="Certificado SSL">
+                    </div>
+                    @*
+                        <div class="item">
+                            <img src="//assets.pagseguro.com.br/ps-integration-assets/banners/seguranca/seguranca_125x125.gif" alt="Banner PagSeguro" title="Compre com PagSeguro e fique sossegado">
+                        </div>
+                    *@
+                </div>
+            </div>
+            <div class="left-column">
+                <div class="column">
+                    <header>
+                        ATENDIMENTO
+                    </header>
+                    <div class="text-atendimento">
+                        Segunda &agrave; Sexta das  08:00 &agrave;s 12:00h<br>
+                        e de 13:00 &agrave;s 17:00h<br><br>
+                        <a class="fixed-whatsapp" href="https://api.whatsapp.com/send?phone=5531984569039&text=Ol%C3%A1%2C%20estou%20navegando%20na%20loja%20virtual%20da%20Solu%C3%A7%C3%B5es%20Usiminas%20e%20preciso%20da%20sua%20ajuda!%20" title="whatsapp" id="whatsapp" target="_blank">
+                            <img alt="" src="/assets/image/icons/whatsapp-1.svg">
+                            @* <span style="color: #FFF; margin-left: 5px"> Whatsapp</span> *@
+                        </a>
+                    </div>
+                    <div class="phone">
+                        @* @LojaCorp.Control.Company._Company.Phone1 *@
+                        <p>Whatsapp: (31) 98456-9039</p>
+                    </div>
+                    <div class="redes-sociais">
+                        <header>
+                            SIGA A USIMINAS
+                        </header>
+                        <socialbar>
+                            @if (redesSociais.Find(f => f.Identifier == "facebook") != null)
+                            {
+                                <a class="text color grey" href="@redesSociais.Find(f => f.Identifier == "facebook").Content" target="_blank">
+                                    <i class="facebook icon"></i>
+                                </a>
+                            }
+                            @if (redesSociais.Find(f => f.Identifier == "instagram") != null)
+                            {
+                                <a class="text color grey" href="@redesSociais.Find(f => f.Identifier == "instagram").Content" target="_blank">
+                                    <i class="instagram icon"></i>
+                                </a>
+                            }
+                            @if (redesSociais.Find(f => f.Identifier == "twitter") != null)
+                            {
+                                <a class="text color grey" href="@redesSociais.Find(f => f.Identifier == "twitter").Content" target="_blank">
+                                    <i class="twitter icon"></i>
+                                </a>
+                            }
+                            @if (redesSociais.Find(f => f.Identifier == "youtube") != null)
+                            {
+                                <a class="text color grey" href="@redesSociais.Find(f => f.Identifier == "youtube").Content" target="_blank">
+                                    <i class="youtube icon"></i>
+                                </a>
+                            }
+                            @if (redesSociais.Find(f => f.Identifier == "google plus") != null)
+                            {
+                                <a class="text color grey" href="@redesSociais.Find(f => f.Identifier == "google plus").Content" target="_blank">
+                                    <i class="google plus icon"></i>
+                                </a>
+                            }
+                            @if (redesSociais.Find(f => f.Identifier.ToUpper() == "WHATSAPP") != null)
+                            {
+                                string urlWhasapp = HttpContext.Current.Request.Url.ToString();
+                                if (urlWhasapp.Contains("?"))
+                                {
+                                    urlWhasapp = urlWhasapp.Split('?')[0];
+                                }
+                                <a class="text color grey" href="https://api.whatsapp.com/send?phone=5531984569039&text=@urlWhasapp" target="_blank" title="WHATSAPP">
+                                    <i class="whatsapp icon"></i>
+                                </a>
+                            }
+                            @if (redesSociais.Find(f => f.Identifier.ToUpper() == "BLOGER") != null)
+                            {
+                                <a class="text color grey" href="@redesSociais.Find(f => f.Identifier == "bloger").Content" target="_blank" title="Blogger">
+                                    <i class="wpforms icon"></i>
+                                </a>
+                            }
+                            <a class="text color grey" href="https://pt.linkedin.com/company/usiminas" target="_blank" title="linkedin">
+                                <i class="linkedin icon"></i>
+                            </a>
+                        </socialbar>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://static.zenvia.com/embed/js/zenvia-chat.min.js"></script>
+    <script>
+        var chat = new ZenviaChat('d6f39a7e92f36c36ee8eb9c7bbef389b')
+            .embedded('button').build();
+    </script>
+    <style type="text/css">
+        .znv-chat .znv-float-button {
+            background-image: url('https://solucoes.usiminas.com/assets/image/susi.jpg');
+            background-size: 60px;
+            background-position-x: center;
+            border: 4px solid #4eaf34;
+        }
+    </style>
+</footer>
+
+<div class="subFooter">
+    <div class="ui container">
+        <div class="subFooter-wrapper">
+            <div class="endereco">
+                <h6>@LojaCorp.Control.Company._Company.FantasyName &copy; 2020 | Todos os direitos reservados.</h6>
+                <address>
+                    @LojaCorp.Control.Company._Company.ComplementText
+                    @{
+                        string complementAddress = LojaCorp.Control.Company._Company.Complement != "" ? " " + LojaCorp.Control.Company._Company.Complement + ", " : "";
+                    }
+                    @string.Format("{0}, {1}{2}", LojaCorp.Control.Company._Company.Address, complementAddress, LojaCorp.Control.Company._Company.Neighbourhood) |
+                    @string.Format("{0}-{1}-{2}", LojaCorp.Control.Company._Company.CEP, LojaCorp.Control.Company._Company.City, LojaCorp.Control.Company._Company.State) |
+                    CNPJ: @LojaCorp.Control.Company._Company.CNPJ
+                </address>
+            </div>
+            <div class="logos-footer">
+                @Html.Partial("Common/_JetLogo")
+                <a href="https://agencia.life/" target="_blank">
+                    <img class="ui middle aligned image" src="/assets/image/life.png" alt="Ir para Life Digital" title="Ir para Life Digital">
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" async="" src="/assets/js/footer-internet-explorer.js"></script>
+<div class="modal-block">
+</div>
+@*teste pablo*@
