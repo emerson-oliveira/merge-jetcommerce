@@ -192,6 +192,16 @@
     color: black; 
     padding: 15px; 
     border-radius: 5px;
+    
+    .ui.input {
+        width: 100%;
+
+        input {
+            border-color: #fff;
+            border-bottom-color: #ddd;
+        }
+
+    }
 }
 
 .success-debit-pagseguro h3 {

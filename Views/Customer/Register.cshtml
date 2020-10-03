@@ -472,7 +472,7 @@
                                     </div>
                                 </a>
                                 <button type="submit"
-                                        class="ui animated button large submit primary right floated"
+                                        class="ui animated button large submit primary right floated" 
                                         tabindex="0">
                                     <div class="visible content">Cadastrar</div>
                                     <div class="hidden content">
@@ -512,26 +512,6 @@
             });
         }
         else {
-            var googleRecaptchaVersion = "";
-
-            if ($('#googleVersion').length > 0) {
-                googleRecaptchaVersion = $('#googleVersion').val();
-            }
-
-            if (googleRecaptchaVersion == '2') {
-                $("#googleResponse").val('');
-                grecaptcha.reset();
-            } else {
-                var googleSiteKey = $('#googleSiteKey').val();
-                $.ajaxSetup({ async: false });
-                $.getScript("https://www.google.com/recaptcha/api.js?render=" + googleSiteKey, function () {
-                    grecaptcha.ready(function () {
-                        grecaptcha.execute(googleSiteKey, { action: 'Register' }).then(function (token) {
-                            $("#googleResponse").val(token);
-                        });
-                    });
-                });
-            }
 
             swal({
                 title: '',
@@ -546,27 +526,8 @@
     }
 
     function OnFailure(response) {
-        var googleRecaptchaVersion = "";
-
-        if ($('#googleVersion').length > 0) {
-            googleRecaptchaVersion = $('#googleVersion').val();
-        }
 
         if (response.Success == false) {
-            if (googleRecaptchaVersion == '2') {
-                $("#googleResponse").val('');
-                grecaptcha.reset();
-            } else {
-                var googleSiteKey = $('#googleSiteKey').val();
-                $.ajaxSetup({ async: false });
-                $.getScript("https://www.google.com/recaptcha/api.js?render=" + googleSiteKey, function () {
-                    grecaptcha.ready(function () {
-                        grecaptcha.execute(googleSiteKey, { action: 'Register' }).then(function (token) {
-                            $("#googleResponse").val(token);
-                        });
-                    });
-                });
-            }
 
             swal({
                 title: '',

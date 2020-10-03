@@ -8,6 +8,7 @@ variations = {
     config: {
         container: '#variations-container', //div responsavel por receber as variacoes
         references: '#json-detail', //json que contem todas as referencias
+        selectedReferences: '#principal-referencias-selecionadas',
         showStockOut: '#hdnShowProductOutOfStock', //exibe ou nao variacoes sem estoque,
         productSKU: '#produto-sku', //hidden que contem o id do SKU para adicionar ao carrinho
         itensDisable: { //itens que receberao a classe 'disabled' quando o stock for 0
@@ -18,7 +19,7 @@ variations = {
         stock: { // opcao que contempla a exibicao de uma mensagem com estoque da variacao selecionada
             showMessageStock: true, //se true a mensagem sera exibida
             messageStockContainer: 'messageStock', // div que recebera o html da mensagem
-            maxStockValue: 3, //quando o estoque for menor ou igual ao valor, a mensagem sera exibida
+            maxStockValue: 3, //quando o estoque for menor ou igual ao valor, a mensagem sera exibida 
             messageStockHtml: '<i class="icon bell"></i>Temos apenas <strong>0${value}</strong> em estoque', //html da mensagem
         },
         htmlPrice : { //itens que contem os valores da variacao
@@ -40,10 +41,11 @@ variations = {
         if($(this.config.references).length > 0 && $(this.config.container).length > 0) {
             this.verifyContent()//iniciamos a criacao das variacoes
             this.clickBtn($(this.config.container)) //setamos as acoes do click das variacoes
-            this.hideVariations() //escondemos as variacoes que nao pertencem a variacao selecionada
+            this.hideVariations() //escondemos as variacoes que nao pertencem a variacao selecionada           
 
         } else {
-            this.gallery()
+            if($(this.config.selectedReferences).length > 0)
+                this.getImageThumbnail()
         }
 
     },
@@ -228,10 +230,6 @@ variations = {
 
         container.addClass("loaded")
 
-        if(!this.isDevice()) {
-            $(".easyzoom").easyZoom().init();
-        }
-
     },
     //funcao para criar as acoes do click de cada variacao
     clickBtn: function(container) {
@@ -318,7 +316,7 @@ variations = {
             variationSelect.push($(this).closest('.references').data('reference') +'-'+ $(this).data('variation'))
         });
 
-        $("#principal-referencias-selecionadas").val(variationSelect.join())
+        $(this.config.selectedReferences).val(variationSelect.join())
 
         $.ajax({
             url: '/Product/SlideCor/',
@@ -345,7 +343,7 @@ variations = {
     },
     isDevice: function() {
 
-        var isiDevice = /android|webos|iphone|ipad|ipod|blackberry|windows phone|phone/i.test(navigator.userAgent.toLowerCase());
+        var isiDevice = /android|webos|iphone|ipad|ipod|blackberry|windows|phone/i.test(navigator.userAgent.toLowerCase());
         return isiDevice;
     },
     slickZoom: function() {

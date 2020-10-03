@@ -211,3 +211,35 @@ $(document).ready(function () {
   });
 
 })
+
+$(document).on("click", ".btn-yami", function () {
+    var iframe = document.createElement('iframe');
+    iframe.src = $(this).attr("href");
+    iframe.frameBorder = "0";
+    iframe.width = "900px";
+    iframe.height = "500px";
+
+    iframe.onload = function () {
+        $('.ui.modal.yami').modal('show');
+    };
+
+    $('.ui.modal.yami .iframe-modal').empty().append(iframe);
+
+    return false;
+});
+
+$(document).on("click", ".btn-yami-acompanha", function () {
+    var iframe = document.createElement('iframe');
+    iframe.src = $(this).attr("href");
+    iframe.frameBorder = "0";
+    iframe.width = "900px";
+    iframe.height = "500px";
+
+    iframe.onload = function () {
+        $('.ui.modal.yami').modal('show');
+    };
+
+    $('.ui.modal.yami .iframe-modal').empty().append(iframe);
+
+    return false;
+});
