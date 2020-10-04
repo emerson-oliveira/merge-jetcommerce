@@ -4,7 +4,35 @@
 <script src="~/assets/js/app.js?v1"></script>
 <script src="~/assets/js/scripts.js?v1"></script>
 
+<script type="text/javascript" src="https://cdn-prod.securiti.ai/consent/sdk-stub.js"></script>
+<script>
+    (function () {
 
+
+        var s = document.createElement('script');
+
+
+        s.src = 'https://cdn-prod.securiti.ai/consent/cookie-consent-sdk.js';
+
+
+        s.setAttribute('data-tenant-uuid', '5bc42b39-e0c6-403e-9f94-3a84f67d26f8');
+
+
+        s.setAttribute('data-domain-uuid', 'a033887e-c811-494d-87c0-00e5d3f4c4f4');
+
+
+        s.setAttribute('data-backend-url', 'https://app.securiti.ai');
+
+
+        var parent_node = document.head || document.body;
+
+
+        parent_node.appendChild(s);
+
+
+        s.addEventListener('load', function() { window.initCmp(); });
+})()
+</script>
 
 
 
