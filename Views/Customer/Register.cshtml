@@ -543,3 +543,123 @@
         }
     }
 </script>
+<script>
+                    window.addEventListener('load', function() {
+                    var browserFingerPrint = ''
+                    let s = document.createElement('script');
+                    s.async = 1;
+                    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.js';
+                    let parent_node = document.head || document.body;
+                    parent_node.appendChild(s);
+                    s.addEventListener('load', function() {
+                        Fingerprint2.get(function(components) {
+                            browserFingerPrint = Fingerprint2.x64hash128(components.map(function(pair) {
+                                return pair.value
+                            }).join(), 31)
+                        })
+                    });
+
+                    var codeGenMetadata = {
+                        // todo: put form id here
+                        formPropertyId: 6,
+                        formSelector: '[id*="registro_cliente"]',
+                        subjectIdentifiers: [{"name":"Nome","selector":"[data-validate = \"name\"]","isPrimary":false},{"name":"contact","selector":"[name = \"contact\"]","isPrimary":false},{"name":"name","selector":"[data-validate = \"businessName\"]","isPrimary":false},{"name":"FantasyName","selector":"[name = \"FantasyName\"]","isPrimary":false},{"name":"Cpf","selector":"[data-validate = \"cpf\"]","isPrimary":false},{"name":"Rg_ie","selector":"[name = \"Rg_ie\"]","isPrimary":false},{"name":"Cpf_cnpj","selector":"[data-validate = \"cnpj\"]","isPrimary":false},{"name":"Rg_ie","selector":"[id = \"inscricaoEstadual\"]","isPrimary":false},{"name":"DateBirth","selector":"[name = \"DateBirth\"]","isPrimary":false},{"name":"Phone.Phone1","selector":"[name = \"Phone.Phone1\"]","isPrimary":false},{"name":"Phone.Phone2","selector":"[name = \"Phone.Phone2\"]","isPrimary":false},{"name":"Email","selector":"[name = \"Email\"]","isPrimary":true},{"name":"User.password","selector":"[name = \"User.password\"]","isPrimary":false},{"name":"Address[0].ZipCode","selector":"[name = \"Address[0].ZipCode\"]","isPrimary":false},{"name":"Address[0].StreetAddress","selector":"[name = \"Address[0].StreetAddress\"]","isPrimary":false},{"name":"Address[0].Number","selector":"[name = \"Address[0].Number\"]","isPrimary":false},{"name":"Address[0].Complement","selector":"[name = \"Address[0].Complement\"]","isPrimary":false},{"name":"Address[0].Neighbourhood","selector":"[name = \"Address[0].Neighbourhood\"]","isPrimary":false},{"name":"Address[0].City","selector":"[name = \"Address[0].City\"]","isPrimary":false},{"name":"Address[1].ZipCode","selector":"[name = \"Address[1].ZipCode\"]","isPrimary":false},{"name":"Address[1].StreetAddress","selector":"[name = \"Address[1].StreetAddress\"]","isPrimary":false},{"name":"Address[1].Number","selector":"[name = \"Address[1].Number\"]","isPrimary":false},{"name":"Address[1].Complement","selector":"[name = \"Address[1].Complement\"]","isPrimary":false},{"name":"Address[1].Neighbourhood","selector":"[name = \"Address[1].Neighbourhood\"]","isPrimary":false},{"name":"Address[1].City","selector":"[name = \"Address[1].City\"]","isPrimary":false},{"name":"Gender","selector":"[name = \"Gender\"]","isPrimary":false},{"name":"MaritalStatus","selector":"[name = \"MaritalStatus\"]","isPrimary":false},{"name":"Address[0].State","selector":"[name = \"Address[0].State\"]","isPrimary":false},{"name":"Address[1].State","selector":"[name = \"Address[1].State\"]","isPrimary":false}],
+                        consentIdentifiers: [{"type":"checkbox","name":"categoria","selector":"[id = \"categoria\"]","propertyId":649,"consentValue":"checked"}],
+                        consentTrigger: {
+                            action: 'click',
+                            selector: '[class = "ui animated button large submit primary right floated"]'
+                        }
+                    }
+
+                    var isConsentTaken = false
+                    var prepareConsentPayload = function(formEle) {
+                        if (!isConsentTaken) {
+                            isConsentTaken = true
+                            const emailField = formEle.querySelector("[type = \"email\"]")
+                            let payload = {
+                                form_info: {
+                                    subject_info: {}
+                                },
+                                consent_info: [],
+                                browser_finger_print: browserFingerPrint,
+                                policy_version: 1,
+                                form_property_id: codeGenMetadata.formPropertyId
+                            }
+
+                            if (codeGenMetadata.consentIdentifiers.length === 1 && codeGenMetadata.consentIdentifiers[0].name === 'DefaultElementId') {
+                                payload.consent_info.push({
+                                    granted: true,
+                                    timestamp: parseInt(new Date().getTime() / 1000),
+                                    property_id: parseInt(codeGenMetadata.consentIdentifiers[0].propertyId)
+                                })
+                            } else {
+                                codeGenMetadata.consentIdentifiers.forEach(function(identifier) {
+                                    payload.consent_info.push({
+                                        granted: getGranted(identifier, formEle),
+                                        timestamp: parseInt(new Date().getTime() / 1000),
+                                        property_id: parseInt(identifier.propertyId)
+                                    })
+                                })
+                            }
+
+                            codeGenMetadata.subjectIdentifiers.forEach(function(identifier) {
+                                payload.form_info.subject_info[identifier.name] = formEle.querySelector(identifier.selector) && formEle.querySelector(identifier.selector).value || ''
+                                if (!payload.hasOwnProperty('uuid') && identifier.isPrimary) {
+                                    payload.uuid = payload.form_info.subject_info[identifier.name] || ''
+                                }
+                            })
+                            return payload
+                        }
+                    }
+
+                    function getGranted(identifier, formEle) {
+                        if (identifier.type == 'checkbox') {
+                            return identifier.consentValue === 'checked' ? formEle.querySelector(identifier.selector).checked : !formEle.querySelector(identifier.selector).checked
+                        } else {
+                            return identifier.consentValue === Array.prototype.slice.call(formEle.querySelectorAll(identifier.selector)).filter(function(r) { return r.checked })[0].value
+                        }
+                    }
+
+                    function postConsentedItems(consentedItem) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', 'https://app.securiti.ai/privaci/v1/consent/form/singleupload', false);
+                        xhr.setRequestHeader('Content-type', 'application/json');
+                        xhr.setRequestHeader('X-Auth-Token', 'ebf65ee3-6122-4cf6-bb36-ad724484ab98');
+
+                        xhr.onload = function () {
+                            if (this.status >= 200 && this.status < 300) {
+                                let resp = JSON.parse(xhr.response)
+                                if (resp.status === 0) {
+                                    console.log('consent uploaded successfully');
+                                }
+                            } else {
+                                console.log('consent upload failed', this.status, xhr.statusText);
+                            }
+                            setTimeout(function () { isConsentTaken = false }, 0)
+                        };
+                        xhr.onerror = function () {
+                            console.log('consent upload failed', this.status, xhr.statusText);
+                            setTimeout(function () { isConsentTaken = false }, 0)
+                        };
+                        xhr.send(JSON.stringify(consentedItem));
+                    }
+
+                    var uploadConsent = function () {
+                        let payload = prepareConsentPayload(document.querySelector(codeGenMetadata.formSelector))
+                        if(payload) {
+                            return postConsentedItems(payload);
+                        }
+                    }
+
+                    document.querySelector(codeGenMetadata.formSelector).addEventListener('submit', function () {
+                        uploadConsent()
+                    })
+
+                    if (codeGenMetadata.consentTrigger.action === 'click') {
+                        document.querySelector(codeGenMetadata.formSelector).querySelector(codeGenMetadata.consentTrigger.selector)
+                            .addEventListener(codeGenMetadata.consentTrigger.action, function () {
+                                uploadConsent()
+                            })
+                        }
+                    })</script>
+
