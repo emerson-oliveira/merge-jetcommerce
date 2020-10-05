@@ -4,18 +4,18 @@
   <div class="ui container">
     <div class="menu">
       <nav class="navigation">
-        <ul>
+        <ul class="first-level">
           @foreach (DomainProduct.Entities.Category category in Model)
           {
             if (category.Level.Length == 2)
             {
-              <li>
-                <a href="@category.UrlFriendly" class="item" title="@category.Name">
+              <li class="item-first-level">
+                <a href="@category.UrlFriendly" class="item link-first-level" title="@category.Name">
                   @category.Name
                   @if (category.ChildCategories != null && category.ChildCategories.Any())
                   {
                     <i class="dropdown icon"></i>
-                  }               
+                  }
                 </a>
                 @if (category.ChildCategories != null && category.ChildCategories.Any())
                 {

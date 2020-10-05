@@ -82,7 +82,7 @@
 
 				.button{
 					height: 50px;
-					background-color: $primary-color;
+					background-color: #FF9933!important;
 					border-radius: 10px;
 					border: 1px solid transparent;
 					transition: background-color .4s ease-in-out, border .4s ease-in-out;
@@ -257,7 +257,7 @@
 			margin-left: 5px;
 			color: #ffffff;
 			text-transform: uppercase;
-			background: lighten($secondary-color , 20);
+			background: #f93!important;
 			font-size: 13px;
 
 			@media screen and (max-width: $mobile-bp) {

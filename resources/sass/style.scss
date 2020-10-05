@@ -129,6 +129,10 @@ body{
         width: 480px;
         max-width: 100%;
 
+        @media(width: 1280px){
+          width: 300px;
+        }
+        
         .input{
 
           input{
